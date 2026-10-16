@@ -20,7 +20,7 @@ body.dark{--ink:#101a1e;--panel:#17252a;--line:#2c3d42;--text:#edf6f4;--muted:#9
 .proof:hover{transform:translateY(-3px)}.review:hover{transform:translateY(-6px) rotate(.3deg);box-shadow:0 18px 38px rgba(20,48,55,.12)}
 .garageCard:hover{transform:translateY(-5px) rotate(.25deg);box-shadow:0 28px 65px rgba(20,48,55,.14)}
 .brand:hover{transform:translateY(-1px)}
-.brandLogo{display:block;width:64px;height:64px;object-fit:contain;object-position:center;background:#fff;border-radius:10px;padding:2px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.brandLogo{display:block;width:64px;height:64px;object-fit:contain;object-position:center}
 @media(max-width:520px){.brandLogo{width:66px;height:66px}.nav{height:88px}}.btn{position:relative;overflow:hidden}.btn:after{content:"";position:absolute;inset:-2px;transform:translateX(-120%) skewX(-18deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);transition:transform .55s}.btn:hover:after{transform:translateX(120%) skewX(-18deg)}
 .mapGraphic{min-height:440px;padding:0;position:relative;overflow:hidden;background:#e9f0e9;border-color:var(--line)}
 .mapCanvas{position:absolute;inset:0;background-color:#e9f0e9;background-image:linear-gradient(rgba(89,121,111,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(89,121,111,.08) 1px,transparent 1px);background-size:36px 36px}
@@ -69,7 +69,8 @@ body.dark{--ink:#101a1e;--panel:#17252a;--line:#2c3d42;--text:#edf6f4;--muted:#9
 #scrollProgress{position:fixed;top:0;left:0;height:3px;background:var(--red2);width:0;z-index:40;transition:width .1s linear}
 header{transition:box-shadow .25s}
 header.scrolled{box-shadow:0 10px 30px rgba(0,0,0,.08)}
-.links a{position:relative;padding-bottom:4px}
+.links a{position:relative}
+.links a:not(.btn){padding-bottom:4px}
 .links a.active{color:var(--text)}
 .links a.active:after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--red2);border-radius:2px}
 .btn:active{transform:scale(.96)}
@@ -85,9 +86,25 @@ header.scrolled{box-shadow:0 10px 30px rgba(0,0,0,.08)}
   .review,.contactBox{animation:serviceReveal linear both;animation-timeline:view();animation-range:entry 5% cover 30%}
 }
 @media(prefers-reduced-motion:reduce){.review,.contactBox{animation:none!important;opacity:1!important;transform:none!important;filter:none!important}}
+
+/* Loading screen */
+#loadScreen{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:#05090b;transition:opacity .9s cubic-bezier(.4,0,.2,1),visibility .9s cubic-bezier(.4,0,.2,1)}
+#loadScreen.hide{opacity:0;visibility:hidden;pointer-events:none}
+header{opacity:0;transition:box-shadow .25s,opacity .9s ease .1s}
+main,footer{opacity:0;transform:translateY(14px);transition:opacity .9s ease .1s,transform .9s ease .1s}
+body.loaded header{opacity:1}
+body.loaded main,body.loaded footer{opacity:1;transform:none}
+.loadLogoWrap{position:relative;display:flex;align-items:center;justify-content:center}
+.loadRing{position:absolute;top:50%;left:50%;width:150px;height:150px;margin:-75px 0 0 -75px;border:1.5px solid rgba(8,90,86,.55);border-radius:50%;animation:ringPulse 2.4s ease-out infinite}
+.loadRing:nth-child(2){animation-delay:.8s}
+.loadRing:nth-child(3){animation-delay:1.6s}
+#loadScreen img{position:relative;width:230px;height:auto;animation:loadPulse 1.6s ease-in-out infinite;z-index:1}
+@keyframes loadPulse{0%,100%{transform:scale(1);opacity:.85;filter:drop-shadow(0 0 16px rgba(10,164,156,.4))}50%{transform:scale(1.06);opacity:1;filter:drop-shadow(0 0 32px rgba(10,164,156,.7))}}
+@keyframes ringPulse{0%{transform:scale(.55);opacity:.6}100%{transform:scale(1.9);opacity:0}}
+@media(prefers-reduced-motion:reduce){#loadScreen img{animation:none;filter:drop-shadow(0 0 22px rgba(10,164,156,.5))}.loadRing{animation:none;opacity:.3}}
 </style>
 </head>
-<body><div id="scrollProgress"></div><header><div class="wrap nav"><a class="brand" href="#top"><img class="brandLogo" src="logo.png" alt="Northern City Car Care logo"></a><nav class="links"><a href="#services">Services</a><a href="#about">Why us</a><a href="#contact">Contact</a><a class="btn primary" href="tel:+61424806810">Call 0424 806 810</a><button class="themeToggle" id="themeToggle" aria-label="Toggle day and night mode">☾</button></nav></div></header>
+<body class="dark"><div id="loadScreen"><div class="loadLogoWrap"><span class="loadRing"></span><span class="loadRing"></span><span class="loadRing"></span><img src="logo.png" alt="Loading Northern City Car Care"></div></div><noscript><style>#loadScreen{display:none}</style></noscript><div id="scrollProgress"></div><header><div class="wrap nav"><a class="brand" href="#top"><img class="brandLogo" src="logo.png" alt="Northern City Car Care logo"></a><nav class="links"><a href="#services">Services</a><a href="#about">Why us</a><a href="#contact">Contact</a><a class="btn primary" href="tel:+61424806810">Call 0424 806 810</a><button class="themeToggle" id="themeToggle" aria-label="Toggle day and night mode">☾</button></nav></div></header>
 <main id="top">
 <section class="hero"><div class="wrap heroGrid"><div><div class="eyebrow">Campbellfield • Melbourne North</div><h1>YOUR CAR.<br>CARED FOR.</h1><div class="typed typewriterLine" aria-label="Mechanical service. Transmission repair. Done right."><span class="typewriterText">Mechanical service.</span><span class="typewriterText">Transmission repair.</span><span class="typewriterText">Done right.</span></div><p>Local automotive care built around straightforward service, reliable workmanship and the kind of trust that keeps drivers coming back.</p><div class="actions"><a class="btn primary" href="tel:+61424806810">☎ Call the workshop</a><a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query=5%2F11-13%20Foden%20Ave%20Campbellfield%20VIC%203061" target="_blank" rel="noopener">Get directions ↗</a></div></div><aside class="garageCard"><div class="eyebrow">Customer rating</div><div class="big">4.8 / 5</div><div class="stars">★★★★★</div><div class="meta"><div class="metaRow"><span>Workshop</span>Factory 5, 11–13 Foden Ave<br>Campbellfield VIC 3061</div><div class="metaRow"><span>Phone</span>+61 424 806 810</div><div class="metaRow"><span>Category</span>Auto repair shop</div></div></aside></div></section><div class="ticker"><div class="tickerTrack"><span><b>●</b>Mechanical Service</span><span><b>●</b>Mechanical Repair</span><span><b>●</b>DSG Transmission</span><span><b>●</b>DQ200 Transmission</span><span><b>●</b>Transmission Problems</span><span><b>●</b>Repair + Service</span><span><b>●</b>Mechanical Service</span><span><b>●</b>Mechanical Repair</span><span><b>●</b>DSG Transmission</span><span><b>●</b>DQ200 Transmission</span><span><b>●</b>Transmission Problems</span><span><b>●</b>Repair + Service</span></div></div>
 <div class="strip"><div class="wrap stripIn"><div class="proof"><strong>Local workshop</strong><span>Based in Campbellfield</span></div><div class="proof"><strong>Highly rated</strong><span>Strong customer feedback online</span></div><div class="proof"><strong>Easy to reach</strong><span>Call or get directions in one tap</span></div></div></div>
@@ -99,9 +116,18 @@ header.scrolled{box-shadow:0 10px 30px rgba(0,0,0,.08)}
 <a class="mobileCall" href="tel:+61424806810">☎ CALL NORTHERN CITY CAR CARE</a>
 <button id="backToTop" class="backToTop" aria-label="Back to top">↑</button>
 <script>
+const loadScreen=document.getElementById('loadScreen');
+addEventListener('load',()=>{
+  setTimeout(()=>{
+    loadScreen.classList.add('hide');
+    document.body.classList.add('loaded');
+    setTimeout(()=>loadScreen.remove(),950);
+  },1400);
+});
+
 const t=document.getElementById('themeToggle');
 function icon(){t.textContent=document.body.classList.contains('dark')?'☀':'☾'}
-if(localStorage.getItem('nccc-theme')==='dark')document.body.classList.add('dark');icon();
+if(localStorage.getItem('nccc-theme')==='light')document.body.classList.remove('dark');icon();
 t.addEventListener('click',()=>{document.body.classList.toggle('dark');localStorage.setItem('nccc-theme',document.body.classList.contains('dark')?'dark':'light');icon()});
 
 const header=document.querySelector('header');
